@@ -43,9 +43,20 @@ class ModelTest(TestCase):
         # Assertions
         for wrong_email, correct_email in sample_emails:
             user = get_user_model().objects.create_user(
-                email= wrong_email,
-                password= 'testPassword@123'
+                email=wrong_email,
+                password='testPassword@123'
             )
 
             # Assertions
             self.assertEqual(user.email, correct_email)
+
+    def test_raise_error_on_missing_email(self):
+        """Test if error is raise if email field is missing.
+
+        Note: We don't need to create a user, the assertion identifies
+        and tells us if value exception is being raised..
+        """
+
+        # Assertions
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user('', 'testPassword123')
