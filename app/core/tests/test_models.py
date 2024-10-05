@@ -28,3 +28,24 @@ class ModelTest(TestCase):
         # Assertions
         self.assertEqual(user.email, creds['email'])
         self.assertTrue(user.check_password(creds['password']))
+
+    def test_user_email_normalized(self):
+        """Test if the emails provided by the user are normalized
+        and saved to the user model."""
+
+        sample_emails = [
+            ["Sample@EXAMPLE.COM", "Sample@example.com"],
+            ["SamPle@Example.COM", "SamPle@example.com"],
+            ["SamPLEe@example.COM", "SamPLEe@example.com"],
+            ["SAMPLE@EXAMPLE.com", "SAMPLE@example.com"],
+        ]
+
+        # Assertions
+        for wrong_email, correct_email in sample_emails:
+            user = get_user_model().objects.create_user(
+                email= wrong_email,
+                password= 'testPassword@123'
+            )
+
+            # Assertions
+            self.assertEqual(user.email, correct_email)
