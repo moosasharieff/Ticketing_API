@@ -1,4 +1,4 @@
-FROM python:3.11-alpine3.19
+FROM python:3-alpine3.19
 LABEL maintainer="Mohammed Moosa Sharieff"
 
 ENV PYTHONUNBUFFERED=1
